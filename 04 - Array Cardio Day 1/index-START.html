@@ -38,28 +38,109 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    let filteredInventors = inventors.filter((arr)=>{
+      return arr.year >= 1500 && arr.year <= 1599;
+    });
+
+    console.table(filteredInventors);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    let inventorsNames = inventors.map((arr)=>{
+      return arr.first + " " +  arr.last;
+      //or return `${arr.first} ${arr.last}`;
+    });
+
+    console.log(inventorsNames);
+
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    // this will bubble the investors up and down hence sorting them
+    let inventorsSorted = inventors.sort((a, b)=>{
+      return a.year - b.year;
+
+      /*alternatively
+      if (a.year > b.year) {
+        return 1;
+      } else {
+        return -1;
+      }
+      */
+    });
+
+    /*or you can use a ternary - shorthand if statement which is the same as above
+    const inventorsSorted = inventors.sort((a,b) => a.year > b.year ? 1 : -1);    
+    */
+    console.log(inventorsSorted);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const totalAge = inventors.reduce((total, currentValue, index, arr)=>{
+      return total + (arr[index].passed - arr[index].year);
+    }, 0);
+    
+    //better alternative
+    const totalAge2 = inventors.reduce((total, currentValue)=>{
+      return total + (currentValue.passed - currentValue.year);
+    }, 0);
+
+    console.log("Total Years: ");
+    console.log(totalAge2);
 
     // 5. Sort the inventors by years lived
-
+    let inventorsSorted2 = inventors.sort((a, b)=>{
+      if (a.passed - a.year > b.passed - b.year) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    console.table(inventorsSorted2);
+    
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
-
+    /*mw-category mw-category-columns*/
+    //open website above and run code in console
+    const category = document.querySelector(".mw-category");
+    //looks for links inside category dom element
+    //querySelector will return a node list - so we have to convert to array for map to work
+    //const links = [...category.querySelectorAll("a")];
+   // const links = Array.from(category.querySelectorAll("a"));
+   // const dex = links
+    //              .map(link => link.textContent)
+    //              .filter(name => name.includes("de"));
+    
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    let peopleSorted = people.sort((a, b)=>{
+       //split (to array) and save to two different variables
+       [aLast, aFirst] = a.split(", ");
+       [bLast, bFirst] = b.split(", ");
+
+      if (aLast > bLast) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    console.table(peopleSorted);
+
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const transportation = data.reduce((obj, vehicle) => {
+      //if vehicle does not exist in object then initialize with zero
+      if (!obj[vehicle]) {
+        obj[vehicle] = 0;
+      }
+      obj[vehicle]++;
+      return obj;
+    }, {});
+
+    console.table(transportation);
 
   </script>
 </body>
